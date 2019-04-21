@@ -14,33 +14,24 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.Random;
 
 import nl.naire.mipino.R;
 
 public class GameActivity extends AppCompatActivity {
-    static class NoteInfo {
-        NoteInfo(int resource, int number) {
-            this.resource = resource;
-            this.number = number;
-        }
-        public int resource;
-        public int number;
-    }
-
-    private Random random = new Random();
-    private static NoteInfo[] notes = {
-        new NoteInfo(R.string.note_c4, 60),
-        new NoteInfo(R.string.note_d4, 62),
-        new NoteInfo(R.string.note_e4, 64),
-        new NoteInfo(R.string.note_f4, 65),
-        new NoteInfo(R.string.note_g4, 67),
-        new NoteInfo(R.string.note_a4, 69),
-        new NoteInfo(R.string.note_b4, 71),
-    };
     private int currentIndex = -1;
     private TextView noteTextView;
+    private TextView scoreTotalTime;
+    private TextView scoreTime;
+    private TextView scoreNote;
+    private TextView scoreScore;
+    private TextView scoreLastScore;
+    private TextView scoreHighScore;
     private MidiNumber midiNotes;
+    private GameSettings gameSettings;
+    private GameState gameState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +41,25 @@ public class GameActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         noteTextView = (TextView)findViewById(R.id.noteTextView);
+        scoreTotalTime = (TextView)findViewById(R.id.score_total_time);
+        scoreTime = (TextView)findViewById(R.id.score_time);
+        scoreNote = (TextView)findViewById(R.id.score_note);
+        scoreScore = (TextView)findViewById(R.id.score_score);
+        scoreLastScore = (TextView)findViewById(R.id.score_last_score);
+        scoreHighScore = (TextView)findViewById(R.id.score_high_score);
+
+        gameSettings = new GameSettings();
+        gameSettings.setDuration(120);
+        gameSettings.add(GameSettings.Group.CMajor);
+        gameSettings.add(GameSettings.Range.Treble_C4B4);
+
+        gameState = new GameState(gameSettings.size(), gameSettings.getDuration());
+        gameState.newNote();
+        displayGameState();
 
         if(savedInstanceState != null) currentIndex = savedInstanceState.getInt("currentIndex", -1);
-        if(currentIndex == -1) currentIndex = randomIndex();
-        noteTextView.setText(notes[currentIndex].resource);
+        if(currentIndex == -1) currentIndex = gameSettings.random();
+        noteTextView.setText(gameSettings.get(currentIndex).resource);
 
         midiNotes = new MidiNumber((MidiManager)getSystemService(MIDI_SERVICE));
         midiNotes.registerListener(midiNumberListener);
@@ -98,7 +104,24 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        currentIndex = savedInstanceState.getInt("currentIndex", randomIndex());
+        currentIndex = savedInstanceState.getInt("currentIndex", gameSettings.random());
+    }
+
+    private String secondsToString(int seconds) {
+        int minutes = seconds / 60;
+        seconds = seconds - minutes*60;
+        return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    private void displayGameState() {
+        scoreTotalTime.setText(secondsToString(gameSettings.getDuration()));
+        if(gameState.isRunning()) {
+            scoreTime.setText(secondsToString(gameState.timeRemaining()));
+        }
+        else {
+            scoreTime.setText(secondsToString(gameState.timeEllapsed()));
+        }
+        scoreNote.setText(String.valueOf(gameState.getNoteScore()));
     }
 
     private MidiNumber.Listener midiNumberListener = new MidiNumber.Listener() {
@@ -117,9 +140,9 @@ public class GameActivity extends AppCompatActivity {
                 public void run() {
                     String text = "Key #" + String.valueOf(number);
                     Toast.makeText(GameActivity.this, text, Toast.LENGTH_SHORT).show();
-                    if(number == notes[currentIndex].number) {
-                        currentIndex = randomIndex(currentIndex);
-                        noteTextView.setText(notes[currentIndex].resource);
+                    if(number == gameSettings.get(currentIndex).number) {
+                        currentIndex = gameSettings.random(currentIndex);
+                        noteTextView.setText(gameSettings.get(currentIndex).resource);
                     }
                 }
             });
@@ -127,19 +150,7 @@ public class GameActivity extends AppCompatActivity {
     };
 
     public void nextButtonPressed(View view) {
-        currentIndex = randomIndex(currentIndex);
-        noteTextView.setText(notes[currentIndex].resource);
+        currentIndex = gameSettings.random(currentIndex);
+        noteTextView.setText(gameSettings.get(currentIndex).resource);
     }
-
-    int randomIndex() {
-        int index = random.nextInt(notes.length);
-        return index;
-    }
-
-    int randomIndex(int skipNote) {
-        int index = random.nextInt(notes.length-1);
-        if(index >= skipNote) index++;
-        return index;
-    }
-
 }
