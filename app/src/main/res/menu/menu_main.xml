@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="nl.naire.mipino.nl.naire.mipino.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_clear_score"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Clear Score"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_clear_high_score"
+        android:orderInCategory="100"
+        android:title="Clear High Score"
         app:showAsAction="never" />
 </menu>
