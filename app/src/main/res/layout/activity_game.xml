@@ -16,9 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:logo="@android:drawable/presence_online"
+            app:logo="@android:drawable/presence_invisible"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="MiPiNo - Yamaha Electronic Bla"
+            app:title="MiPiNo - Disconnected"
             app:titleMarginStart="20dp" />
 
     </android.support.design.widget.AppBarLayout>

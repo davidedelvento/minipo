@@ -4,6 +4,7 @@
     tools:context="nl.naire.mipino.nl.naire.mipino.MainActivity">
     <item
         android:id="@+id/action_clear_score"
+        android:onClick="onClearScoreClicked"
         android:orderInCategory="100"
         android:title="Clear Score"
         app:showAsAction="never" />

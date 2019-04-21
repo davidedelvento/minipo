@@ -4,8 +4,6 @@ import android.media.midi.MidiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,9 +12,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import nl.naire.mipino.R;
 
@@ -29,6 +26,8 @@ public class GameActivity extends AppCompatActivity {
     private TextView scoreScore;
     private TextView scoreLastScore;
     private TextView scoreHighScore;
+    private Toolbar toolbar;
+    private Timer timer;
     private MidiNumber midiNotes;
     private GameSettings gameSettings;
     private GameState gameState;
@@ -37,7 +36,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         noteTextView = (TextView)findViewById(R.id.noteTextView);
@@ -53,9 +52,12 @@ public class GameActivity extends AppCompatActivity {
         gameSettings.add(GameSettings.Group.CMajor);
         gameSettings.add(GameSettings.Range.Treble_C4B4);
 
-        gameState = new GameState(gameSettings.size(), gameSettings.getDuration());
+        gameState = new GameState(gameSettings.getDuration(), gameSettings.size());
         gameState.newNote();
         displayGameState();
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(gameStateTimerTask, 200, 200);
 
         if(savedInstanceState != null) currentIndex = savedInstanceState.getInt("currentIndex", -1);
         if(currentIndex == -1) currentIndex = gameSettings.random();
@@ -115,22 +117,47 @@ public class GameActivity extends AppCompatActivity {
 
     private void displayGameState() {
         scoreTotalTime.setText(secondsToString(gameSettings.getDuration()));
+        scoreNote.setText(String.valueOf(gameState.getNoteScore()));
+        scoreScore.setText(gameState.getScore());
+        scoreLastScore.setText(gameState.getLastScore());
+        scoreHighScore.setText(gameState.getHighScore());
+    }
+
+    private void displayGameStateTime() {
         if(gameState.isRunning()) {
             scoreTime.setText(secondsToString(gameState.timeRemaining()));
         }
         else {
             scoreTime.setText(secondsToString(gameState.timeEllapsed()));
         }
-        scoreNote.setText(String.valueOf(gameState.getNoteScore()));
     }
 
-    private MidiNumber.Listener midiNumberListener = new MidiNumber.Listener() {
+    private TimerTask gameStateTimerTask = new TimerTask() {
         @Override
-        public void onConnectedChanged(boolean connected, String name) {
-            String text;
-            if(connected) text = "Connected: " + name;
-            else text = "Disconnected";
-            Toast.makeText(GameActivity.this, text, Toast.LENGTH_LONG).show();
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    displayGameStateTime();
+                }
+            });
+        }
+    };
+
+    private final MidiNumber.Listener midiNumberListener = new MidiNumber.Listener() {
+        @Override
+        public void onConnectedChanged(final boolean connected, final String name) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                public void run() {
+                    if (connected) {
+                        toolbar.setLogo(android.R.drawable.presence_online);
+                        toolbar.setTitle("MiPiNo - Connected " + name);
+                    } else {
+                        toolbar.setLogo(android.R.drawable.presence_invisible);
+                        toolbar.setTitle("MiPiNo - Disconnected");
+                    }
+                }
+            });
         }
 
         @Override
@@ -140,9 +167,15 @@ public class GameActivity extends AppCompatActivity {
                 public void run() {
                     String text = "Key #" + String.valueOf(number);
                     Toast.makeText(GameActivity.this, text, Toast.LENGTH_SHORT).show();
-                    if(number == gameSettings.get(currentIndex).number) {
+                    if (number == gameSettings.get(currentIndex).number) {
+                        gameState.correct();
+                        gameState.newNote();
                         currentIndex = gameSettings.random(currentIndex);
                         noteTextView.setText(gameSettings.get(currentIndex).resource);
+                        displayGameState();
+                    } else {
+                        gameState.incorrect();
+                        displayGameState();
                     }
                 }
             });
@@ -150,7 +183,19 @@ public class GameActivity extends AppCompatActivity {
     };
 
     public void nextButtonPressed(View view) {
+        gameState.incorrect();
+        gameState.newNote();
+        displayGameState();
         currentIndex = gameSettings.random(currentIndex);
         noteTextView.setText(gameSettings.get(currentIndex).resource);
+    }
+
+    public void startButtonPressed(View view) {
+    }
+
+    public void onClearScoreClicked(MenuItem item) {
+        gameState.clear();
+        gameState.newNote();
+        displayGameState();
     }
 }

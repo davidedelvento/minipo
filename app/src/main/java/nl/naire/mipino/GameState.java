@@ -58,6 +58,7 @@ public class GameState implements Serializable {
 
     public void incorrect() {
         noteScore = 0;
+        notes++;
     }
 
     public int getNoteScore() {
@@ -65,11 +66,11 @@ public class GameState implements Serializable {
     }
 
     public int getMaxNoteScore() {
-        return numberOfNotes / 5;
+        return numberOfNotes;
     }
 
     public String getScore() {
-        return String.format("%d (%d/%d)", score, notes, correct);
+        return String.format("%d (%d/%d)", score, correct, notes);
     }
 
     public String getLastScore() {

@@ -60,7 +60,7 @@ public class GameSettings implements Serializable {
     }
 
     public int size() {
-        return notes.size();
+        return notes.size() / 5;
     }
 
     public NoteInfo get(int index) {
