@@ -8,4 +8,7 @@
     <string name="note_g4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb99;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
     <string name="note_a4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb98;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
     <string name="note_b4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

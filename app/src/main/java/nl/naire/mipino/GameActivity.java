@@ -18,7 +18,7 @@ import java.util.Random;
 
 import nl.naire.mipino.R;
 
-public class MainActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
     static class NoteInfo {
         NoteInfo(int resource, int number) {
             this.resource = resource;
@@ -45,18 +45,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         noteTextView = (TextView)findViewById(R.id.noteTextView);
 
@@ -116,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             String text;
             if(connected) text = "Connected: " + name;
             else text = "Disconnected";
-            Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
+            Toast.makeText(GameActivity.this, text, Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -125,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     String text = "Key #" + String.valueOf(number);
-                    Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GameActivity.this, text, Toast.LENGTH_SHORT).show();
                     if(number == notes[currentIndex].number) {
                         currentIndex = randomIndex(currentIndex);
                         noteTextView.setText(notes[currentIndex].resource);
