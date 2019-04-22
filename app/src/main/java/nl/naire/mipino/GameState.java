@@ -27,6 +27,9 @@ public class GameState implements Serializable {
     }
 
     public void stop() {
+        if(timeRemaining() == 0) {
+            lastScore = getScore();
+        }
         running = false;
     }
 

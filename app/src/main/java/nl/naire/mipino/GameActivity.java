@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,8 @@ public class GameActivity extends AppCompatActivity {
     private TextView scoreLastScore;
     private TextView scoreHighScore;
     private Toolbar toolbar;
+    private Button nextButton;
+    private Button startButton;
     private Timer timer;
     private MidiNumber midiNotes;
     private GameSettings gameSettings;
@@ -46,11 +49,17 @@ public class GameActivity extends AppCompatActivity {
         scoreScore = (TextView)findViewById(R.id.score_score);
         scoreLastScore = (TextView)findViewById(R.id.score_last_score);
         scoreHighScore = (TextView)findViewById(R.id.score_high_score);
+        nextButton = (Button)findViewById(R.id.next_button);
+        startButton = (Button)findViewById(R.id.start_button);
 
         gameSettings = new GameSettings();
         gameSettings.setDuration(120);
         gameSettings.add(GameSettings.Group.CMajor);
         gameSettings.add(GameSettings.Range.Treble_C4B4);
+        gameSettings.add(GameSettings.Range.Treble_C5B5);
+
+        if(savedInstanceState != null) currentIndex = savedInstanceState.getInt("currentIndex", -1);
+        if(currentIndex == -1) currentIndex = gameSettings.random();
 
         gameState = new GameState(gameSettings.getDuration(), gameSettings.size());
         gameState.newNote();
@@ -58,10 +67,6 @@ public class GameActivity extends AppCompatActivity {
 
         timer = new Timer();
         timer.scheduleAtFixedRate(gameStateTimerTask, 200, 200);
-
-        if(savedInstanceState != null) currentIndex = savedInstanceState.getInt("currentIndex", -1);
-        if(currentIndex == -1) currentIndex = gameSettings.random();
-        noteTextView.setText(gameSettings.get(currentIndex).resource);
 
         midiNotes = new MidiNumber((MidiManager)getSystemService(MIDI_SERVICE));
         midiNotes.registerListener(midiNumberListener);
@@ -121,14 +126,28 @@ public class GameActivity extends AppCompatActivity {
         scoreScore.setText(gameState.getScore());
         scoreLastScore.setText(gameState.getLastScore());
         scoreHighScore.setText(gameState.getHighScore());
+        noteTextView.setText(gameSettings.get(currentIndex).resource);
     }
 
-    private void displayGameStateTime() {
+    private void displayGameStateUpdating() {
         if(gameState.isRunning()) {
             scoreTime.setText(secondsToString(gameState.timeRemaining()));
         }
         else {
             scoreTime.setText(secondsToString(gameState.timeEllapsed()));
+        }
+
+        if(gameState.isRunning() && gameState.timeRemaining() == 0) {
+            startButton.setText("Done");
+            nextButton.setEnabled(false);
+        }
+        else if(gameState.isRunning()) {
+            startButton.setText("Stop");
+            nextButton.setEnabled(false);
+        }
+        else {
+            startButton.setText("Start");
+            nextButton.setEnabled(true);
         }
     }
 
@@ -138,7 +157,7 @@ public class GameActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    displayGameStateTime();
+                    displayGameStateUpdating();
                 }
             });
         }
@@ -171,7 +190,6 @@ public class GameActivity extends AppCompatActivity {
                         gameState.correct();
                         gameState.newNote();
                         currentIndex = gameSettings.random(currentIndex);
-                        noteTextView.setText(gameSettings.get(currentIndex).resource);
                         displayGameState();
                     } else {
                         gameState.incorrect();
@@ -185,12 +203,24 @@ public class GameActivity extends AppCompatActivity {
     public void nextButtonPressed(View view) {
         gameState.incorrect();
         gameState.newNote();
-        displayGameState();
         currentIndex = gameSettings.random(currentIndex);
-        noteTextView.setText(gameSettings.get(currentIndex).resource);
+        displayGameState();
     }
 
     public void startButtonPressed(View view) {
+        if(gameState.isRunning()) {
+            gameState.stop();
+            gameState.clear();
+            gameState.newNote();
+            currentIndex = gameSettings.random();
+            displayGameState();
+        }
+        else {
+            gameState.start();
+            gameState.newNote();
+            currentIndex = gameSettings.random();
+            displayGameState();
+        }
     }
 
     public void onClearScoreClicked(MenuItem item) {

@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="scoreLabel">#000000</color>
     <color name="scoreValue">#000000</color>
+    <color name="groupLabel">#000000</color>
 </resources>

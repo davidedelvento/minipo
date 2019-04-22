@@ -63,6 +63,9 @@ public class MidiNumber {
         public void onDeviceRemoved(MidiDeviceInfo device) {
             if(deviceInfo == device)
             {
+                if(numberListener != null) {
+                    numberListener.onConnectedChanged(false, null);
+                }
                 deviceInfo = null;
             }
         }

@@ -109,6 +109,18 @@ public class GameSettings implements Serializable {
                 );
             }
 
+            if (ranges.contains(Range.Treble_C5B5)) {
+                notes.addAll(Arrays.asList(
+                        new NoteInfo(R.string.note_c5, 72),
+                        new NoteInfo(R.string.note_d5, 74),
+                        new NoteInfo(R.string.note_e5, 76),
+                        new NoteInfo(R.string.note_f5, 77),
+                        new NoteInfo(R.string.note_g5, 79),
+                        new NoteInfo(R.string.note_a5, 81),
+                        new NoteInfo(R.string.note_b5, 83))
+                );
+            }
+
         }
     }
 

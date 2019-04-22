@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MiPiNo</string>
     <string name="action_settings">Settings</string>
+
     <string name="note_c4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb9d;&#xe022;&#xeb9d;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
     <string name="note_d4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb9c;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
     <string name="note_e4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb9b;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
@@ -8,6 +9,23 @@
     <string name="note_g4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb99;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
     <string name="note_a4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb98;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
     <string name="note_b4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+
+    <string name="note_c5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb90;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="note_d5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb91;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="note_e5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb92;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="note_f5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb93;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="note_g5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb94;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="note_a5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb95;&#xe022;&#xeb95;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="note_b5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb95;&#xe022;&#xeb96;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
+
+
+    <string-array name="time_duration_arrays">
+        <item>30 seconds</item>
+        <item>1 minute</item>
+        <item>2 minutes</item>
+        <item>3 minutes</item>
+        <item>5 minutes</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
