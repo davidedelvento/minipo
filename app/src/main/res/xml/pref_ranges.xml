@@ -1,0 +1,22 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:icon="@drawable/ic_gclef"
+        android:key="treble_c4b4"
+        android:title="C4-B4" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:icon="@drawable/ic_gclef"
+        android:key="treble_c5b5"
+        android:title="C5-B5" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:icon="@drawable/ic_fclef"
+        android:key="base_c3b3"
+        android:title="C3-B3" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:icon="@drawable/ic_fclef"
+        android:key="base_d2b2"
+        android:title="D2-B2" />
+</PreferenceScreen>

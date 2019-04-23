@@ -1,0 +1,18 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:iconSpaceReserved="true"
+        android:defaultValue="true"
+        android:key="group_c_major"
+        android:summary="Include whole notes"
+        android:title="C major" />
+    <CheckBoxPreference
+        android:icon="@drawable/ic_flat"
+        android:key="group_flat"
+        android:summary="Include half notes"
+        android:title="Flat" />
+    <CheckBoxPreference
+        android:icon="@drawable/ic_sharp"
+        android:key="group_sharp"
+        android:summary="Include half notes"
+        android:title="Sharp" />
+</PreferenceScreen>

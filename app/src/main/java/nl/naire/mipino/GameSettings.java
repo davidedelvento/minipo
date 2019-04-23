@@ -24,13 +24,13 @@ public class GameSettings implements Serializable {
         Treble_C4B4,
         Treble_C5B5,
         Bass_C3B3,
-        Bass_BD2B2
+        Bass_D2B2
     }
 
     enum Group {
         CMajor,
-        //Flat,
-        //Sharp
+        Flat,
+        Sharp
     }
 
     public void clear() {

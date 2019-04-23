@@ -1,5 +1,6 @@
 package nl.naire.mipino;
 
+import android.content.Intent;
 import android.media.midi.MidiManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -227,5 +228,10 @@ public class GameActivity extends AppCompatActivity {
         gameState.clear();
         gameState.newNote();
         displayGameState();
+    }
+
+    public void onSettingsClicked(MenuItem item) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 }

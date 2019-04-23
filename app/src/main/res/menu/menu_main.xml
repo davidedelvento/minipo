@@ -5,12 +5,14 @@
     <item
         android:id="@+id/action_clear_score"
         android:onClick="onClearScoreClicked"
-        android:orderInCategory="100"
         android:title="Clear Score"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_clear_high_score"
-        android:orderInCategory="100"
         android:title="Clear High Score"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:onClick="onSettingsClicked"
+        android:title="@string/action_settings" />
 </menu>

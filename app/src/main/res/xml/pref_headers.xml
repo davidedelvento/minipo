@@ -1,0 +1,17 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+    <header
+        android:fragment="nl.naire.mipino.SettingsActivity$RangesPreferenceFragment"
+        android:icon="@drawable/ic_ranges"
+        android:title="Ranges" />
+
+    <header
+        android:fragment="nl.naire.mipino.SettingsActivity$GroupsPreferenceFragment"
+        android:icon="@drawable/ic_groups"
+        android:title="Groups" />
+
+    <header
+        android:fragment="nl.naire.mipino.SettingsActivity$MiscPreferenceFragment"
+        android:icon="@drawable/ic_misc"
+        android:title="Miscellaneous" />
+
+</preference-headers>

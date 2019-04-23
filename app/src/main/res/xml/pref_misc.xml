@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:entries="@array/time_duration_items"
+        android:entryValues="@array/time_duration_values"
+        android:key="game_duration"
+        android:title="Game Duration"
+        android:defaultValue="120"
+        android:summary="%1$s"/>
+</PreferenceScreen>
