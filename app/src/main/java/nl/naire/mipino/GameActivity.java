@@ -1,10 +1,12 @@
 package nl.naire.mipino;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.midi.MidiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -53,11 +55,8 @@ public class GameActivity extends AppCompatActivity {
         nextButton = (Button)findViewById(R.id.next_button);
         startButton = (Button)findViewById(R.id.start_button);
 
-        gameSettings = new GameSettings();
-        gameSettings.setDuration(120);
-        gameSettings.add(GameSettings.Group.CMajor);
-        gameSettings.add(GameSettings.Range.Treble_C4B4);
-        gameSettings.add(GameSettings.Range.Treble_C5B5);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        gameSettings = new GameSettings(prefs);
 
         if(savedInstanceState != null) currentIndex = savedInstanceState.getInt("currentIndex", -1);
         if(currentIndex == -1) currentIndex = gameSettings.random();

@@ -4,6 +4,5 @@
         android:entryValues="@array/time_duration_values"
         android:key="game_duration"
         android:title="Game Duration"
-        android:defaultValue="120"
-        android:summary="%1$s"/>
+        android:defaultValue="120"/>
 </PreferenceScreen>

@@ -1,5 +1,7 @@
 package nl.naire.mipino;
 
+import android.content.SharedPreferences;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -31,6 +33,25 @@ public class GameSettings implements Serializable {
         CMajor,
         Flat,
         Sharp
+    }
+
+    public GameSettings(SharedPreferences prefs) {
+        clear();
+
+        if(prefs.getBoolean("treble_c4b4", true)) add(Range.Treble_C4B4);
+        if(prefs.getBoolean("treble_c5b5", false)) add(Range.Treble_C5B5);
+        if(prefs.getBoolean("base_c3b3", false)) add(Range.Bass_C3B3);
+        if(prefs.getBoolean("base_d2b2", false)) add(Range.Bass_D2B2);
+        if(prefs.getBoolean("group_c_major", true)) add(Group.CMajor);
+        if(prefs.getBoolean("group_flat", false)) add(Group.Flat);
+        if(prefs.getBoolean("group_sharp", false)) add(Group.Sharp);
+        setDuration(Integer.parseInt(prefs.getString("game_duration", "120")));
+        if(size() == 0) {
+            add(Range.Treble_C4B4);
+        }
+        if(size() == 0) {
+            add(Group.CMajor);
+        }
     }
 
     public void clear() {
