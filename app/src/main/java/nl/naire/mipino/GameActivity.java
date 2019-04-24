@@ -22,7 +22,7 @@ import java.util.TimerTask;
 import nl.naire.mipino.R;
 
 public class GameActivity extends AppCompatActivity {
-    private int currentIndex = -1;
+    private int currentNoteIndex = -1;
     private TextView noteTextView;
     private TextView scoreTotalTime;
     private TextView scoreTime;
@@ -58,10 +58,11 @@ public class GameActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         gameSettings = new GameSettings(prefs);
 
-        if(savedInstanceState != null) currentIndex = savedInstanceState.getInt("currentIndex", -1);
-        if(currentIndex == -1) currentIndex = gameSettings.random();
+        if(savedInstanceState != null) currentNoteIndex = savedInstanceState.getInt("currentNoteIndex", -1);
+        if(currentNoteIndex == -1) currentNoteIndex = gameSettings.random();
 
-        gameState = new GameState(gameSettings.getDuration(), gameSettings.size());
+        if(savedInstanceState != null) gameState = (GameState)savedInstanceState.getSerializable("gameState");
+        if(gameState == null) gameState = new GameState(gameSettings.getDuration(), gameSettings.size());
         gameState.newNote();
         displayGameState();
 
@@ -82,36 +83,15 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_clear_high_score) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putInt("currentIndex", currentIndex);
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        currentIndex = savedInstanceState.getInt("currentIndex", gameSettings.random());
+        savedInstanceState.putInt("currentNoteIndex", currentNoteIndex);
+        savedInstanceState.putSerializable("gameState", gameState);
     }
 
     private String secondsToString(int seconds) {
@@ -126,7 +106,7 @@ public class GameActivity extends AppCompatActivity {
         scoreScore.setText(gameState.getScore());
         scoreLastScore.setText(gameState.getLastScore());
         scoreHighScore.setText(gameState.getHighScore());
-        noteTextView.setText(gameSettings.get(currentIndex).resource);
+        noteTextView.setText(gameSettings.get(currentNoteIndex).resource);
     }
 
     private void displayGameStateUpdating() {
@@ -187,10 +167,10 @@ public class GameActivity extends AppCompatActivity {
                 public void run() {
                     String text = "Key #" + String.valueOf(number);
                     Toast.makeText(GameActivity.this, text, Toast.LENGTH_SHORT).show();
-                    if (number == gameSettings.get(currentIndex).number) {
+                    if (number == gameSettings.get(currentNoteIndex).number) {
                         gameState.correct();
                         gameState.newNote();
-                        currentIndex = gameSettings.random(currentIndex);
+                        currentNoteIndex = gameSettings.random(currentNoteIndex);
                         displayGameState();
                     } else {
                         gameState.incorrect();
@@ -204,7 +184,7 @@ public class GameActivity extends AppCompatActivity {
     public void nextButtonPressed(View view) {
         gameState.incorrect();
         gameState.newNote();
-        currentIndex = gameSettings.random(currentIndex);
+        currentNoteIndex = gameSettings.random(currentNoteIndex);
         displayGameState();
     }
 
@@ -213,13 +193,13 @@ public class GameActivity extends AppCompatActivity {
             gameState.stop();
             gameState.clear();
             gameState.newNote();
-            currentIndex = gameSettings.random();
+            currentNoteIndex = gameSettings.random();
             displayGameState();
         }
         else {
             gameState.start();
             gameState.newNote();
-            currentIndex = gameSettings.random();
+            currentNoteIndex = gameSettings.random();
             displayGameState();
         }
     }

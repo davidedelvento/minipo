@@ -1,5 +1,7 @@
 package nl.naire.mipino;
 
+import android.os.Bundle;
+
 import java.io.Serializable;
 
 public class GameState implements Serializable {
@@ -7,6 +9,17 @@ public class GameState implements Serializable {
         this.duration = duration;
         this.numberOfNotes = numberOfNotes;
         clear();
+    }
+
+    public boolean check(int duration, int numberOfNotes) {
+        if(duration != this.duration || numberOfNotes != this.numberOfNotes) {
+            this.duration = duration;
+            this.numberOfNotes = numberOfNotes;
+            clear();
+            return true;
+        }
+
+        return false;
     }
 
     public void clear() {
