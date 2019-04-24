@@ -1,25 +1,21 @@
 package nl.naire.mipino;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.Scanner;
 
 public class GameState implements Serializable {
-    GameState(int duration, int numberOfNotes) {
+    GameState(SharedPreferences prefs, int duration, int numberOfNotes) {
         this.duration = duration;
         this.numberOfNotes = numberOfNotes;
+        this.lastScore = prefs.getString("last_score", "No last score");
+        this.highScore = prefs.getString("high_score", "No high score");
+
         clear();
-    }
-
-    public boolean check(int duration, int numberOfNotes) {
-        if(duration != this.duration || numberOfNotes != this.numberOfNotes) {
-            this.duration = duration;
-            this.numberOfNotes = numberOfNotes;
-            clear();
-            return true;
-        }
-
-        return false;
     }
 
     public void clear() {
@@ -30,8 +26,9 @@ public class GameState implements Serializable {
         noteScore = 0;
     }
 
-    public void clearHighScore() {
+    public void clearHighScore(SharedPreferences prefs) {
         highScore = "No high score";
+        prefs.edit().putString("high_score", highScore).apply();
     }
 
     public void start() {
@@ -39,9 +36,19 @@ public class GameState implements Serializable {
         clear();
     }
 
-    public void stop() {
+    public void stop(SharedPreferences prefs) {
         if(timeRemaining() == 0) {
+            SharedPreferences.Editor editor = prefs.edit();
+
             lastScore = getScore();
+            editor.putString("last_score", lastScore);
+
+            if(parseScore(lastScore) > parseScore(highScore)) {
+                highScore = lastScore;
+                editor.putString("high_score", highScore);
+            }
+
+            editor.apply();
         }
         running = false;
     }
@@ -97,6 +104,12 @@ public class GameState implements Serializable {
         return highScore;
     }
 
+    private int parseScore(String score) {
+        Scanner scanner = new Scanner(score);
+        if(scanner.hasNextInt()) return scanner.nextInt();
+        else return 0;
+    }
+
     private boolean running = false;
     private int duration;
     private long startTime = System.nanoTime();
@@ -105,6 +118,6 @@ public class GameState implements Serializable {
     private int correct;
     private int score;
     private int noteScore;
-    private String lastScore = "No last score";
-    private String highScore = "No high score";
+    private String lastScore;
+    private String highScore;
 }

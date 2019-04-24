@@ -10,6 +10,7 @@
     <item
         android:id="@+id/action_clear_high_score"
         android:title="Clear High Score"
+        android:onClick="onClearHighScoreClicked"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"

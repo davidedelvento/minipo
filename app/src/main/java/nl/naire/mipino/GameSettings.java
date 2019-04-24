@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class GameSettings implements Serializable {
+public class GameSettings {
     class NoteInfo {
         public int resource;
         public int number;
@@ -105,11 +105,6 @@ public class GameSettings implements Serializable {
 
     public void setDuration(int duration) {
         this.duration = duration;
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        setup();
     }
 
     private void setup() {

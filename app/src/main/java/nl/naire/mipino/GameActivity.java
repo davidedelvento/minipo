@@ -62,7 +62,7 @@ public class GameActivity extends AppCompatActivity {
         if(currentNoteIndex == -1) currentNoteIndex = gameSettings.random();
 
         if(savedInstanceState != null) gameState = (GameState)savedInstanceState.getSerializable("gameState");
-        if(gameState == null) gameState = new GameState(gameSettings.getDuration(), gameSettings.size());
+        if(gameState == null) gameState = new GameState(prefs, gameSettings.getDuration(), gameSettings.size());
         gameState.newNote();
         displayGameState();
 
@@ -165,8 +165,6 @@ public class GameActivity extends AppCompatActivity {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    String text = "Key #" + String.valueOf(number);
-                    Toast.makeText(GameActivity.this, text, Toast.LENGTH_SHORT).show();
                     if (number == gameSettings.get(currentNoteIndex).number) {
                         gameState.correct();
                         gameState.newNote();
@@ -190,7 +188,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void startButtonPressed(View view) {
         if(gameState.isRunning()) {
-            gameState.stop();
+            gameState.stop(PreferenceManager.getDefaultSharedPreferences(this));
             gameState.clear();
             gameState.newNote();
             currentNoteIndex = gameSettings.random();
@@ -208,6 +206,10 @@ public class GameActivity extends AppCompatActivity {
         gameState.clear();
         gameState.newNote();
         displayGameState();
+    }
+
+    public void onClearHighScoreClicked(MenuItem item) {
+        gameState.clearHighScore(PreferenceManager.getDefaultSharedPreferences(this));
     }
 
     public void onSettingsClicked(MenuItem item) {
