@@ -138,15 +138,16 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if(gameState.isRunning() && gameState.timeRemaining() == 0) {
-            startButton.setText("Done");
+            startButton.setText(R.string.done);
+            noteTextView.setText(R.string.note_none);
             nextButton.setEnabled(false);
         }
         else if(gameState.isRunning()) {
-            startButton.setText("Stop");
+            startButton.setText(R.string.stop);
             nextButton.setEnabled(false);
         }
         else {
-            startButton.setText("Start");
+            startButton.setText(R.string.start);
             nextButton.setEnabled(true);
         }
     }
