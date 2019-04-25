@@ -5,7 +5,7 @@
         android:key="group_c_major"
         android:summary="Include whole notes"
         android:title="C major" />
-    <CheckBoxPreference
+    <!-- <CheckBoxPreference
         android:icon="@drawable/ic_flat"
         android:key="group_flat"
         android:summary="Include half notes"
@@ -14,5 +14,5 @@
         android:icon="@drawable/ic_sharp"
         android:key="group_sharp"
         android:summary="Include half notes"
-        android:title="Sharp" />
+        android:title="Sharp" /> -->
 </PreferenceScreen>

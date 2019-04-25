@@ -2,23 +2,40 @@
     <string name="app_name">MiPiNo</string>
     <string name="action_settings">Settings</string>
 
-    <string name="note_none">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;=&#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_none">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;=&#xe014;=&#xe014;=&#xe034;</string>
 
-    <string name="note_c4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb9d;&#xe022;&#xeb9d;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_d4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb9c;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_e4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb9b;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_f4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb9a;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_g4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb99;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_a4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb98;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_b4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_d2">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb9d;&#xe022;&#xeb9e;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_e2">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb9d;&#xe022;&#xeb9d;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_f2">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb9c;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_g2">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb9b;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_a2">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb9a;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_b2">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb99;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
 
-    <string name="note_c5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb90;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_d5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb91;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_e5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb92;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_f5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb93;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_g5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb94;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_a5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb95;&#xe022;&#xeb95;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
-    <string name="note_b5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb95;&#xe022;&#xeb96;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_c3">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb98;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_d3">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_e3">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb90;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_f3">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb91;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_g3">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb92;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_a3">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb93;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="noteg_b3">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb94;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
+
+    <string name="noteg_c4">&#xe020; &#xe01a;&#xe062;&#xe014;=&#xe014;=&#xe014;&#xeb95;&#xe022;&#xeb95;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
+
+    <string name="notef_c4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb9d;&#xe022;&#xeb9d;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_d4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb9c;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_e4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb9b;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_f4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb9a;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_g4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb99;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_a4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb98;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_b4">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+
+    <string name="notef_c5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb90;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_d5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb91;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_e5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb92;&#xe1d5; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_f5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb93;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_g5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb94;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_a5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb95;&#xe022;&#xeb95;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
+    <string name="notef_b5">&#xe020; &#xe01a;&#xe050;&#xe014;=&#xe014;=&#xe014;&#xeb95;&#xe022;&#xeb96;&#xe1d6; &#xe014;=&#xe014;=&#xe034;</string>
 
 
     <string name="done">Done</string>

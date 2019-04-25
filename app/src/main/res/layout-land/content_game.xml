@@ -19,7 +19,7 @@
         android:includeFontPadding="false"
         android:paddingTop="50dp"
         android:paddingBottom="50dp"
-        android:text="@string/note_d4"
+        android:text="@string/notef_d4"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="80sp"

@@ -45,7 +45,7 @@ public class GameActivity extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        noteTextView = (TextView)findViewById(R.id.noteTextView);
+        noteTextView = findViewById(R.id.noteTextView);
         scoreTotalTime = (TextView)findViewById(R.id.score_total_time);
         scoreTime = (TextView)findViewById(R.id.score_time);
         scoreNote = (TextView)findViewById(R.id.score_note);
@@ -119,7 +119,7 @@ public class GameActivity extends AppCompatActivity {
 
         if(gameState.isRunning() && gameState.timeRemaining() == 0) {
             startButton.setText(R.string.done);
-            noteTextView.setText(R.string.note_none);
+            noteTextView.setText(R.string.notef_none);
             nextButton.setEnabled(false);
         }
         else if(gameState.isRunning()) {

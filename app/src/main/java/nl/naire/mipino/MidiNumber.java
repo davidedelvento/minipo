@@ -10,7 +10,7 @@ import android.os.Looper;
 
 import java.io.IOException;
 
-public class MidiNumber {
+class MidiNumber {
     interface Listener {
         void onConnectedChanged(boolean connected, String name);
         void onNumber(int number);
@@ -21,11 +21,11 @@ public class MidiNumber {
         framer = new MidiFramer(receiver);
     }
 
-    public void connect() {
+    void connect() {
         MidiDeviceInfo[] devices = manager.getDevices();
-        for(int i = 0; i < devices.length; i++) {
-            if(devices[i].getType() != MidiDeviceInfo.TYPE_VIRTUAL) {
-                deviceInfo = devices[i];
+        for (MidiDeviceInfo device : devices) {
+            if (device.getType() != MidiDeviceInfo.TYPE_VIRTUAL) {
+                deviceInfo = device;
                 openDevice();
                 break;
             }
@@ -34,7 +34,7 @@ public class MidiNumber {
         manager.registerDeviceCallback(deviceCallback, new Handler(Looper.getMainLooper()));
     }
 
-    public void disconnect() {
+    void disconnect() {
         manager.unregisterDeviceCallback(deviceCallback);
         if(device != null) {
             try {
@@ -46,7 +46,7 @@ public class MidiNumber {
         }
     }
 
-    public void registerListener(Listener listener) {
+    void registerListener(Listener listener) {
         numberListener = listener;
     }
 
@@ -88,10 +88,9 @@ public class MidiNumber {
             device = midiDevice;
 
             MidiDeviceInfo.PortInfo[] ports = device.getInfo().getPorts();
-            for(int i = 0; i < ports.length; i++)
-            {
-                if(ports[i].getType() == MidiDeviceInfo.PortInfo.TYPE_OUTPUT) {
-                    portInfo = ports[i];
+            for (MidiDeviceInfo.PortInfo port : ports) {
+                if (port.getType() == MidiDeviceInfo.PortInfo.TYPE_OUTPUT) {
+                    portInfo = port;
                     break;
                 }
             }
@@ -109,7 +108,7 @@ public class MidiNumber {
 
     private final MidiReceiver receiver = new MidiReceiver() {
         @Override
-        public void onSend(byte[] msg, int offset, int count, long timestamp) throws IOException {
+        public void onSend(byte[] msg, int offset, int count, long timestamp) {
             if (count != 3) return;
 
             if ((msg[0] & MidiConstants.STATUS_COMMAND_MASK) == MidiConstants.STATUS_NOTE_ON) {
