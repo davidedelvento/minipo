@@ -2,15 +2,20 @@ package nl.naire.mipino;
 
 import android.media.midi.MidiDevice;
 import android.media.midi.MidiDeviceInfo;
+import android.media.midi.MidiDeviceStatus;
 import android.media.midi.MidiManager;
 import android.media.midi.MidiOutputPort;
 import android.media.midi.MidiReceiver;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 
 class MidiNumber {
+    private static final String TAG = "MidiNumber";
+
     interface Listener {
         void onConnectedChanged(boolean connected, String name);
         void onNumber(int number);
@@ -36,6 +41,13 @@ class MidiNumber {
 
     void disconnect() {
         manager.unregisterDeviceCallback(deviceCallback);
+        if(port != null) {
+            try {
+                port.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         if(device != null) {
             try {
                 device.close();
@@ -61,12 +73,13 @@ class MidiNumber {
 
         @Override
         public void onDeviceRemoved(MidiDeviceInfo device) {
-            if(deviceInfo == device)
+            if(deviceInfo.getId() == device.getId())
             {
                 if(numberListener != null) {
                     numberListener.onConnectedChanged(false, null);
                 }
                 deviceInfo = null;
+                port = null;
             }
         }
     };
@@ -95,12 +108,14 @@ class MidiNumber {
                 }
             }
 
-            MidiOutputPort port = device.openOutputPort(portInfo.getPortNumber());
+            port = device.openOutputPort(portInfo.getPortNumber());
             if(port != null) {
                 port.connect(framer);
 
                 if(numberListener != null) {
-                    numberListener.onConnectedChanged(true, "#" + String.valueOf(portInfo.getPortNumber()));
+                    String name = deviceInfo.getProperties().getString(MidiDeviceInfo.PROPERTY_NAME);
+                    if(name == null) name = "Unknown Device";
+                    numberListener.onConnectedChanged(true, String.format("%s #%d", name, portInfo.getPortNumber()));
                 }
             }
         }
@@ -124,6 +139,7 @@ class MidiNumber {
     private MidiDeviceInfo deviceInfo;
     private MidiDevice device;
     private MidiDeviceInfo.PortInfo portInfo;
+    private MidiOutputPort port;
     private MidiFramer framer;
     private Listener numberListener;
 }

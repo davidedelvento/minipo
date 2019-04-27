@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,8 @@ public class GameActivity extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         noteTextView = findViewById(R.id.noteTextView);
         scoreTotalTime = (TextView)findViewById(R.id.score_total_time);
         scoreTime = (TextView)findViewById(R.id.score_time);
@@ -58,27 +61,60 @@ public class GameActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         gameSettings = new GameSettings(prefs);
 
-        if(savedInstanceState != null) currentNoteIndex = savedInstanceState.getInt("currentNoteIndex", -1);
-        if(currentNoteIndex == -1) currentNoteIndex = gameSettings.random();
+        if(savedInstanceState == null) {
+            currentNoteIndex = gameSettings.random();
+            gameState = new GameState();
+            gameState.setup(prefs, gameSettings.getDuration(), gameSettings.size());
+            gameState.newNote();
+            displayGameState();
+        }
 
-        if(savedInstanceState != null) gameState = (GameState)savedInstanceState.getSerializable("gameState");
-        if(gameState == null) gameState = new GameState(prefs, gameSettings.getDuration(), gameSettings.size());
-        gameState.newNote();
-        displayGameState();
-
-        timer = new Timer();
-        timer.scheduleAtFixedRate(gameStateTimerTask, 200, 200);
+        prefs.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
 
         midiNotes = new MidiNumber((MidiManager)getSystemService(MIDI_SERVICE));
         midiNotes.registerListener(midiNumberListener);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        displayGameStateUpdating();
+                    }
+                });
+            }
+        }, 200, 200);
         midiNotes.connect();
+    }
+
+    @Override
+    protected void onPause() {
+        midiNotes.disconnect();
+        timer.cancel();
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        midiNotes.disconnect();
     }
 
     @Override
@@ -93,6 +129,32 @@ public class GameActivity extends AppCompatActivity {
         savedInstanceState.putInt("currentNoteIndex", currentNoteIndex);
         savedInstanceState.putSerializable("gameState", gameState);
     }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        gameState = (GameState)savedInstanceState.getSerializable("gameState");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        gameState.setup(prefs, gameSettings.getDuration(), gameSettings.size());
+        gameState.newNote();
+
+        currentNoteIndex = savedInstanceState.getInt("currentNoteIndex", gameSettings.random());
+        if(currentNoteIndex >= gameSettings.size()) currentNoteIndex = gameSettings.random();
+
+        displayGameState();
+    }
+
+    private SharedPreferences.OnSharedPreferenceChangeListener onSharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            gameSettings = new GameSettings(sharedPreferences);
+            gameState.setup(sharedPreferences, gameSettings.getDuration(), gameSettings.size());
+            gameState.newNote();
+            currentNoteIndex = gameSettings.random();
+            displayGameState();
+        }
+    };
 
     private String secondsToString(int seconds) {
         int minutes = seconds / 60;
@@ -132,18 +194,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private TimerTask gameStateTimerTask = new TimerTask() {
-        @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    displayGameStateUpdating();
-                }
-            });
-        }
-    };
-
     private final MidiNumber.Listener midiNumberListener = new MidiNumber.Listener() {
         @Override
         public void onConnectedChanged(final boolean connected, final String name) {
@@ -151,7 +201,7 @@ public class GameActivity extends AppCompatActivity {
                 public void run() {
                     if (connected) {
                         toolbar.setLogo(android.R.drawable.presence_online);
-                        toolbar.setTitle("MiPiNo - Connected " + name);
+                        toolbar.setTitle("MiPiNo - " + name);
                     } else {
                         toolbar.setLogo(android.R.drawable.presence_invisible);
                         toolbar.setTitle("MiPiNo - Disconnected");
@@ -165,6 +215,8 @@ public class GameActivity extends AppCompatActivity {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
+                    if(gameState.isRunning() && gameState.timeRemaining() == 0) return;
+
                     if (number == gameSettings.get(currentNoteIndex).number) {
                         gameState.correct();
                         gameState.newNote();

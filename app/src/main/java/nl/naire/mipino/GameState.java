@@ -9,20 +9,26 @@ import java.io.Serializable;
 import java.util.Scanner;
 
 public class GameState implements Serializable {
-    GameState(SharedPreferences prefs, int duration, int numberOfNotes) {
-        this.duration = duration;
-        this.numberOfNotes = numberOfNotes;
+    GameState() {
+    }
+
+    public void setup(SharedPreferences prefs, int duration, int numberOfNotes) {
         this.lastScore = prefs.getString("last_score", "No last score");
         this.highScore = prefs.getString("high_score", "No high score");
 
-        clear();
+        if(this.duration != duration || this.numberOfNotes != numberOfNotes) {
+            this.duration = duration;
+            this.numberOfNotes = numberOfNotes;
+            clear();
+        }
+
     }
 
     public void clear() {
         startTime = System.nanoTime();
         notes = 0;
         correct = 0;
-        score = 0;
+        summedNotes = 0;
         noteScore = 0;
     }
 
@@ -72,7 +78,7 @@ public class GameState implements Serializable {
     public void correct() {
         if(running && timeEllapsed() > duration) return;
 
-        score += noteScore;
+        summedNotes += noteScore;
         notes++;
         if(noteScore > 0) {
             correct++;
@@ -89,10 +95,17 @@ public class GameState implements Serializable {
     }
 
     public int getMaxNoteScore() {
-        return numberOfNotes;
+        return numberOfNotes / 5;
     }
 
     public String getScore() {
+        int score;
+        if(notes > 0) {
+            score = summedNotes * correct / notes;
+        }
+        else {
+            score = 0;
+        }
         return String.format("%d (%d/%d)", score, correct, notes);
     }
 
@@ -111,12 +124,12 @@ public class GameState implements Serializable {
     }
 
     private boolean running = false;
-    private int duration;
+    private int duration = -1;
     private long startTime = System.nanoTime();
-    private int numberOfNotes;
+    private int numberOfNotes = -1;
     private int notes;
     private int correct;
-    private int score;
+    private int summedNotes;
     private int noteScore;
     private String lastScore;
     private String highScore;

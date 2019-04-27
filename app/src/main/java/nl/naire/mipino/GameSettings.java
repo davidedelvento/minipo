@@ -78,7 +78,7 @@ public class GameSettings {
     }
 
     public int size() {
-        return notes.size() / 5;
+        return notes.size();
     }
 
     public NoteInfo get(int index) {
@@ -87,7 +87,7 @@ public class GameSettings {
 
     public int random() {
         if (size() == 0) throw new IllegalStateException("No notes configured");
-        return random.nextInt(size());
+        return random.nextInt(notes.size());
     }
 
     public int random(int omitIndex) {
@@ -161,7 +161,7 @@ public class GameSettings {
         }
     }
 
-    private Random random = new Random();
+    private Random random = new Random(System.currentTimeMillis());
     private Set<Range> ranges = new HashSet<Range>();
     private Set<Group> groups = new HashSet<Group>();
     private int duration;
