@@ -35,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
     private Button nextButton;
     private Button startButton;
     private Timer timer;
+    private Timer noteLetterTimer;
     private MidiNumber midiNotes;
     private GameSettings gameSettings;
     private GameState gameState;
@@ -49,21 +50,21 @@ public class GameActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         noteTextView = findViewById(R.id.noteTextView);
-        scoreTotalTime = (TextView)findViewById(R.id.score_total_time);
-        scoreTime = (TextView)findViewById(R.id.score_time);
-        scoreNote = (TextView)findViewById(R.id.score_note);
-        scoreScore = (TextView)findViewById(R.id.score_score);
-        scoreLastScore = (TextView)findViewById(R.id.score_last_score);
-        scoreHighScore = (TextView)findViewById(R.id.score_high_score);
-        nextButton = (Button)findViewById(R.id.next_button);
-        startButton = (Button)findViewById(R.id.start_button);
+        scoreTotalTime = findViewById(R.id.score_total_time);
+        scoreTime = findViewById(R.id.score_time);
+        scoreNote = findViewById(R.id.score_note);
+        scoreScore = findViewById(R.id.score_score);
+        scoreLastScore = findViewById(R.id.score_last_score);
+        scoreHighScore = findViewById(R.id.score_high_score);
+        nextButton = findViewById(R.id.next_button);
+        startButton = findViewById(R.id.start_button);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         gameSettings = new GameSettings(prefs);
 
         if(savedInstanceState == null) {
             currentNoteIndex = gameSettings.random();
-            gameState = new GameState();
+            gameState = new GameState(this);
             gameState.setup(prefs, gameSettings.getDuration(), gameSettings.size());
             gameState.newNote();
             displayGameState();
@@ -71,7 +72,7 @@ public class GameActivity extends AppCompatActivity {
 
         prefs.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
 
-        midiNotes = new MidiNumber((MidiManager)getSystemService(MIDI_SERVICE));
+        midiNotes = new MidiNumber(this, (MidiManager)getSystemService(MIDI_SERVICE));
         midiNotes.registerListener(midiNumberListener);
     }
 
@@ -103,6 +104,9 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         midiNotes.disconnect();
         timer.cancel();
+        if(noteLetterTimer != null) noteLetterTimer.cancel();
+        noteLetterTimer = null;
+
 
         super.onPause();
     }
@@ -168,7 +172,12 @@ public class GameActivity extends AppCompatActivity {
         scoreScore.setText(gameState.getScore());
         scoreLastScore.setText(gameState.getLastScore());
         scoreHighScore.setText(gameState.getHighScore());
-        noteTextView.setText(gameSettings.get(currentNoteIndex).resource);
+        if(gameState.isRunning() && gameState.timeRemaining() == 0) {
+            noteTextView.setText(R.string.notef_none);
+        }
+        else {
+            noteTextView.setText(gameSettings.get(currentNoteIndex).resource);
+        }
     }
 
     private void displayGameStateUpdating() {
@@ -201,10 +210,10 @@ public class GameActivity extends AppCompatActivity {
                 public void run() {
                     if (connected) {
                         toolbar.setLogo(android.R.drawable.presence_online);
-                        toolbar.setTitle("MiPiNo - " + name);
+                        toolbar.setTitle(getString(R.string.mipino_connected) + name);
                     } else {
                         toolbar.setLogo(android.R.drawable.presence_invisible);
-                        toolbar.setTitle("MiPiNo - Disconnected");
+                        toolbar.setTitle(R.string.mipino_disconnected);
                     }
                 }
             });

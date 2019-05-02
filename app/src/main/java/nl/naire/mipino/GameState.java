@@ -1,20 +1,22 @@
 package nl.naire.mipino;
 
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Scanner;
 
 public class GameState implements Serializable {
-    GameState() {
+    private final String noHighScore;
+    private final String noLastScore;
+
+    GameState(Context context) {
+        noHighScore = context.getString(R.string.no_high_score);
+        noLastScore = context.getString(R.string.no_last_score);
     }
 
     public void setup(SharedPreferences prefs, int duration, int numberOfNotes) {
-        this.lastScore = prefs.getString("last_score", "No last score");
-        this.highScore = prefs.getString("high_score", "No high score");
+        this.lastScore = prefs.getString("last_score", noLastScore);
+        this.highScore = prefs.getString("high_score", noHighScore);
 
         if(this.duration != duration || this.numberOfNotes != numberOfNotes) {
             this.duration = duration;
@@ -33,8 +35,7 @@ public class GameState implements Serializable {
     }
 
     public void clearHighScore(SharedPreferences prefs) {
-        highScore = "No high score";
-        prefs.edit().putString("high_score", highScore).apply();
+        prefs.edit().putString("high_score", noHighScore).apply();
     }
 
     public void start() {

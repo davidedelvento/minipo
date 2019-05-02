@@ -1,5 +1,6 @@
 package nl.naire.mipino;
 
+import android.content.Context;
 import android.media.midi.MidiDevice;
 import android.media.midi.MidiDeviceInfo;
 import android.media.midi.MidiDeviceStatus;
@@ -15,15 +16,17 @@ import java.io.IOException;
 
 class MidiNumber {
     private static final String TAG = "MidiNumber";
+    private final String unknownDevice;
 
     interface Listener {
         void onConnectedChanged(boolean connected, String name);
         void onNumber(int number);
     }
 
-    MidiNumber(MidiManager manager) {
+    MidiNumber(Context context, MidiManager manager) {
         this.manager = manager;
         framer = new MidiFramer(receiver);
+        unknownDevice = context.getString(R.string.unknown_device);
     }
 
     void connect() {
@@ -114,7 +117,7 @@ class MidiNumber {
 
                 if(numberListener != null) {
                     String name = deviceInfo.getProperties().getString(MidiDeviceInfo.PROPERTY_NAME);
-                    if(name == null) name = "Unknown Device";
+                    if(name == null) name = unknownDevice;
                     numberListener.onConnectedChanged(true, String.format("%s #%d", name, portInfo.getPortNumber()));
                 }
             }

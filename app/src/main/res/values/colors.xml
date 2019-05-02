@@ -6,4 +6,6 @@
     <color name="scoreLabel">#000000</color>
     <color name="scoreValue">#000000</color>
     <color name="groupLabel">#000000</color>
+    <color name="correct">#4CAF50</color>
+    <color name="wrong">#F44336</color>
 </resources>

@@ -12,10 +12,12 @@ public class GameSettings {
     class NoteInfo {
         public int resource;
         public int number;
+        public int letter;
 
-        public NoteInfo(int resource, int number) {
+        public NoteInfo(int resource, int number, int letter) {
             this.resource = resource;
             this.number = number;
+            this.letter = letter;
         }
     }
 
@@ -112,49 +114,49 @@ public class GameSettings {
 
             if (ranges.contains(Range.Bass_D2B2)) {
                 notes.addAll(Arrays.asList(
-                        new NoteInfo(R.string.noteg_d2, 38),
-                        new NoteInfo(R.string.noteg_e2, 40),
-                        new NoteInfo(R.string.noteg_f2, 41),
-                        new NoteInfo(R.string.noteg_g2, 43),
-                        new NoteInfo(R.string.noteg_a2, 45),
-                        new NoteInfo(R.string.noteg_b2, 47))
+                        new NoteInfo(R.string.noteg_d2, 38, R.string.note_d),
+                        new NoteInfo(R.string.noteg_e2, 40, R.string.note_e),
+                        new NoteInfo(R.string.noteg_f2, 41, R.string.note_f),
+                        new NoteInfo(R.string.noteg_g2, 43, R.string.note_g),
+                        new NoteInfo(R.string.noteg_a2, 45, R.string.note_a),
+                        new NoteInfo(R.string.noteg_b2, 47, R.string.note_b))
                 );
             }
 
             if (ranges.contains(Range.Bass_C3C4)) {
                 notes.addAll(Arrays.asList(
-                        new NoteInfo(R.string.noteg_c3, 48),
-                        new NoteInfo(R.string.noteg_d3, 50),
-                        new NoteInfo(R.string.noteg_e3, 52),
-                        new NoteInfo(R.string.noteg_f3, 53),
-                        new NoteInfo(R.string.noteg_g3, 55),
-                        new NoteInfo(R.string.noteg_a3, 57),
-                        new NoteInfo(R.string.noteg_b3, 59),
-                        new NoteInfo(R.string.noteg_c4, 60))
+                        new NoteInfo(R.string.noteg_c3, 48, R.string.note_c),
+                        new NoteInfo(R.string.noteg_d3, 50, R.string.note_d),
+                        new NoteInfo(R.string.noteg_e3, 52, R.string.note_e),
+                        new NoteInfo(R.string.noteg_f3, 53, R.string.note_f),
+                        new NoteInfo(R.string.noteg_g3, 55, R.string.note_g),
+                        new NoteInfo(R.string.noteg_a3, 57, R.string.note_a),
+                        new NoteInfo(R.string.noteg_b3, 59, R.string.note_b),
+                        new NoteInfo(R.string.noteg_c4, 60, R.string.note_c))
                 );
             }
 
             if (ranges.contains(Range.Treble_C4B4)) {
                 notes.addAll(Arrays.asList(
-                        new NoteInfo(R.string.notef_c4, 60),
-                        new NoteInfo(R.string.notef_d4, 62),
-                        new NoteInfo(R.string.notef_e4, 64),
-                        new NoteInfo(R.string.notef_f4, 65),
-                        new NoteInfo(R.string.notef_g4, 67),
-                        new NoteInfo(R.string.notef_a4, 69),
-                        new NoteInfo(R.string.notef_b4, 71))
+                        new NoteInfo(R.string.notef_c4, 60, R.string.note_c),
+                        new NoteInfo(R.string.notef_d4, 62, R.string.note_d),
+                        new NoteInfo(R.string.notef_e4, 64, R.string.note_e),
+                        new NoteInfo(R.string.notef_f4, 65, R.string.note_f),
+                        new NoteInfo(R.string.notef_g4, 67, R.string.note_g),
+                        new NoteInfo(R.string.notef_a4, 69, R.string.note_a),
+                        new NoteInfo(R.string.notef_b4, 71, R.string.note_b))
                 );
             }
 
             if (ranges.contains(Range.Treble_C5B5)) {
                 notes.addAll(Arrays.asList(
-                        new NoteInfo(R.string.notef_c5, 72),
-                        new NoteInfo(R.string.notef_d5, 74),
-                        new NoteInfo(R.string.notef_e5, 76),
-                        new NoteInfo(R.string.notef_f5, 77),
-                        new NoteInfo(R.string.notef_g5, 79),
-                        new NoteInfo(R.string.notef_a5, 81),
-                        new NoteInfo(R.string.notef_b5, 83))
+                        new NoteInfo(R.string.notef_c5, 72, R.string.note_c),
+                        new NoteInfo(R.string.notef_d5, 74, R.string.note_d),
+                        new NoteInfo(R.string.notef_e5, 76, R.string.note_e),
+                        new NoteInfo(R.string.notef_f5, 77, R.string.note_f),
+                        new NoteInfo(R.string.notef_g5, 79, R.string.note_g),
+                        new NoteInfo(R.string.notef_a5, 81, R.string.note_a),
+                        new NoteInfo(R.string.notef_b5, 83, R.string.note_b))
                 );
             }
 

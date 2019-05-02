@@ -3,8 +3,8 @@
         android:iconSpaceReserved="true"
         android:defaultValue="true"
         android:key="group_c_major"
-        android:summary="Include whole notes"
-        android:title="C major" />
+        android:summary="@string/group_summary_c_major"
+        android:title="@string/group_title_c_major" />
     <!-- <CheckBoxPreference
         android:icon="@drawable/ic_flat"
         android:key="group_flat"
