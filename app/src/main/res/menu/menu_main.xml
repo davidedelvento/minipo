@@ -5,11 +5,11 @@
     <item
         android:id="@+id/action_clear_score"
         android:onClick="onClearScoreClicked"
-        android:title="Clear Score"
+        android:title="@string/menu_clear_score"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_clear_high_score"
-        android:title="Clear High Score"
+        android:title="@string/menu_clear_high_score"
         android:onClick="onClearHighScoreClicked"
         app:showAsAction="never" />
     <item

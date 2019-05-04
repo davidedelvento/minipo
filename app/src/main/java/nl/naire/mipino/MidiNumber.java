@@ -3,19 +3,15 @@ package nl.naire.mipino;
 import android.content.Context;
 import android.media.midi.MidiDevice;
 import android.media.midi.MidiDeviceInfo;
-import android.media.midi.MidiDeviceStatus;
 import android.media.midi.MidiManager;
 import android.media.midi.MidiOutputPort;
 import android.media.midi.MidiReceiver;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 
 class MidiNumber {
-    private static final String TAG = "MidiNumber";
     private final String unknownDevice;
 
     interface Listener {
@@ -65,7 +61,7 @@ class MidiNumber {
         numberListener = listener;
     }
 
-    private MidiManager.DeviceCallback deviceCallback = new MidiManager.DeviceCallback() {
+    private final MidiManager.DeviceCallback deviceCallback = new MidiManager.DeviceCallback() {
         @Override
         public void onDeviceAdded(MidiDeviceInfo device) {
             if(device.getType() != MidiDeviceInfo.TYPE_VIRTUAL && deviceInfo == null) {
@@ -91,7 +87,7 @@ class MidiNumber {
         manager.openDevice(deviceInfo, onDeviceOpenedListener, new Handler(Looper.getMainLooper()));
     }
 
-    private MidiManager.OnDeviceOpenedListener onDeviceOpenedListener = new MidiManager.OnDeviceOpenedListener() {
+    private final MidiManager.OnDeviceOpenedListener onDeviceOpenedListener = new MidiManager.OnDeviceOpenedListener() {
         @Override
         public void onDeviceOpened(MidiDevice midiDevice) {
             if(device != null) {
@@ -138,11 +134,11 @@ class MidiNumber {
     };
 
 
-    private MidiManager manager;
+    private final MidiManager manager;
     private MidiDeviceInfo deviceInfo;
     private MidiDevice device;
     private MidiDeviceInfo.PortInfo portInfo;
     private MidiOutputPort port;
-    private MidiFramer framer;
+    private final MidiFramer framer;
     private Listener numberListener;
 }

@@ -21,7 +21,7 @@ package nl.naire.mipino;
  * These values are defined in the MIDI Standard 1.0
  * available from the MIDI Manufacturers Association.
  */
-public class MidiConstants {
+class MidiConstants {
     protected final static String TAG = "MidiTools";
     public static final byte STATUS_COMMAND_MASK = (byte) 0xF0;
     public static final byte STATUS_CHANNEL_MASK = (byte) 0x0F;
@@ -48,25 +48,18 @@ public class MidiConstants {
     public static final byte STATUS_START = (byte) 0xFA;
     public static final byte STATUS_CONTINUE = (byte) 0xFB;
     public static final byte STATUS_STOP = (byte) 0xFC;
-    public static final byte STATUS_ACTIVE_SENSING = (byte) 0xFE;
+    private static final byte STATUS_ACTIVE_SENSING = (byte) 0xFE;
     public static final byte STATUS_RESET = (byte) 0xFF;
 
     /** Number of bytes in a message nc from 8c to Ec */
-    public final static int CHANNEL_BYTE_LENGTHS[] = { 3, 3, 3, 3, 2, 2, 3 };
+    private final static int[] CHANNEL_BYTE_LENGTHS = { 3, 3, 3, 3, 2, 2, 3 };
 
     /** Number of bytes in a message Fn from F0 to FF */
-    public final static int SYSTEM_BYTE_LENGTHS[] = { 1, 2, 3, 2, 1, 1, 1, 1, 1,
+    private final static int[] SYSTEM_BYTE_LENGTHS = { 1, 2, 3, 2, 1, 1, 1, 1, 1,
             1, 1, 1, 1, 1, 1, 1 };
 
     public final static int MAX_CHANNELS = 16;
 
-    /**
-     * MIDI messages, except for SysEx, are 1,2 or 3 bytes long.
-     * You can tell how long a MIDI message is from the first status byte.
-     * Do not call this for SysEx, which has variable length.
-     * @param statusByte
-     * @return number of bytes in a complete message, zero if data byte passed
-     */
     public static int getBytesPerMessage(byte statusByte) {
         // Java bytes are signed so we need to mask off the high bits
         // to get a value between 0 and 255.
@@ -82,12 +75,6 @@ public class MidiConstants {
         }
     }
 
-    /**
-     * @param msg
-     * @param offset
-     * @param count
-     * @return true if the entire message is ActiveSensing commands
-     */
     public static boolean isAllActiveSensing(byte[] msg, int offset,
             int count) {
         // Count bytes that are not active sensing.

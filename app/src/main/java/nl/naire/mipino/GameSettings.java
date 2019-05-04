@@ -10,11 +10,11 @@ import java.util.Set;
 
 public class GameSettings {
     class NoteInfo {
-        public int resource;
-        public int number;
-        public int letter;
+        public final int resource;
+        public final int number;
+        final int letter;
 
-        public NoteInfo(int resource, int number, int letter) {
+        NoteInfo(int resource, int number, int letter) {
             this.resource = resource;
             this.number = number;
             this.letter = letter;
@@ -53,18 +53,18 @@ public class GameSettings {
         }
     }
 
-    public void clear() {
+    private void clear() {
         ranges.clear();
         groups.clear();
         setup();
     }
 
-    public void add(Range range) {
+    private void add(Range range) {
         ranges.add(range);
         setup();
     }
 
-    public void add(Group group) {
+    private void add(Group group) {
         groups.add(group);
         setup();
     }
@@ -102,7 +102,7 @@ public class GameSettings {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    private void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -163,9 +163,9 @@ public class GameSettings {
         }
     }
 
-    private Random random = new Random(System.currentTimeMillis());
-    private Set<Range> ranges = new HashSet<Range>();
-    private Set<Group> groups = new HashSet<Group>();
+    private final Random random = new Random(System.currentTimeMillis());
+    private final Set<Range> ranges = new HashSet<>();
+    private final Set<Group> groups = new HashSet<>();
     private int duration;
-    private transient ArrayList<NoteInfo> notes = new ArrayList<NoteInfo>();
+    private final transient ArrayList<NoteInfo> notes = new ArrayList<>();
 }

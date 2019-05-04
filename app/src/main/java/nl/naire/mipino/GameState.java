@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import java.io.Serializable;
 import java.util.Scanner;
 
-public class GameState implements Serializable {
+class GameState implements Serializable {
     private final String noHighScore;
     private final String noLastScore;
 
@@ -95,7 +95,7 @@ public class GameState implements Serializable {
         return noteScore;
     }
 
-    public int getMaxNoteScore() {
+    private int getMaxNoteScore() {
         return numberOfNotes / 5;
     }
 

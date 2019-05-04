@@ -29,9 +29,9 @@ import java.io.IOException;
  *
  * Resolves Running Status and interleaved System Real-Time messages.
  */
-public class MidiFramer extends MidiReceiver {
-    private MidiReceiver mReceiver;
-    private byte[] mBuffer = new byte[3];
+class MidiFramer extends MidiReceiver {
+    private final MidiReceiver mReceiver;
+    private final byte[] mBuffer = new byte[3];
     private int mCount;
     private byte mRunningStatus;
     private int mNeeded;
